@@ -59,8 +59,6 @@ class HomePageState extends State<HomePage> {
                         (index) => ExpansionTileWidget(
                             item: items[index],
                             onComplete: (value) async {
-                              print(await DBProvider.db
-                                  .updateToDo(value['id'] as int));
                               int rowsAffetcted = await DBProvider.db
                                   .updateToDo(value['id'] as int);
 

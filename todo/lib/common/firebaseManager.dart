@@ -38,7 +38,7 @@ abstract class FirebaseManager {
               ));
         },
         verificationFailed: (AuthException e) {
-          showToast("Please check your connection");
+          showToast("Unable to sign in");
         },
         codeSent: (verificationId, [_]) => showDialog(
             barrierDismissible: true,
