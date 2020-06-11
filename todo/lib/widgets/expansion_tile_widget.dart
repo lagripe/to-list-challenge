@@ -18,8 +18,6 @@ class ExpansionTileWidget extends StatefulWidget {
 
 class _ExpansionTileWidgetState extends State<ExpansionTileWidget> {
   @override
-
-  //TODO: add delete button when expanded
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
