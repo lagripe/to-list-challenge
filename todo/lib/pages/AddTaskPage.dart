@@ -214,7 +214,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
         DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day);
     temp = temp.add(
         Duration(hours: _selectedTime.hour, minutes: _selectedTime.minute));
-    print(temp);
     return temp;
   }
 }

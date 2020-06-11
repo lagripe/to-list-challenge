@@ -41,9 +41,9 @@ class _SyncPageState extends State<SyncPage> {
               child: Text("Sync now"),
               onPressed: () async {
                 if (await FirebaseManager.syncNow()) {
-                  showToast("Your tasks has been synced up");
+                  showToast("Your tasks have been synced up");
                 } else {
-                  showToast("Unable to sync, please check your connection");
+                  showToast("Unable to sync, no internet access");
                 }
               },
             ),

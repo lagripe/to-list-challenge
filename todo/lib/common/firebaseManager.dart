@@ -38,7 +38,7 @@ abstract class FirebaseManager {
               ));
         },
         verificationFailed: (AuthException e) {
-          showToast("Verification failed");
+          showToast("Please check your connection");
         },
         codeSent: (verificationId, [_]) => showDialog(
             barrierDismissible: true,
@@ -46,7 +46,7 @@ abstract class FirebaseManager {
             builder: (contextDialog) {
               TextEditingController _codeController = TextEditingController();
               return AlertDialog(
-                title: Text('Code verification'),
+                title: Text('SMS Verification'),
                 content: Theme(
                   data: Theme.of(context).copyWith(
                       primaryColor: accentColor,
@@ -69,7 +69,7 @@ abstract class FirebaseManager {
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text("Verify"),
+                    child: Text("Submit"),
                     onPressed: () async {
                       FocusScope.of(context).requestFocus(FocusNode());
                       if (!validInput(codeValidator, _codeController.text)) {
@@ -117,17 +117,13 @@ abstract class FirebaseManager {
       var phoneId = (await auth.currentUser()).phoneNumber;
       var refCollection =
           firestore.collection('todo').document(phoneId).collection('tasks');
-      print('##########2');
       await deleteOldSync();
-      print('##########3');
       return await DBProvider.db.getAllToDo().then((tasks) {
         try {
           tasks.forEach((element) async {
-            print(element);
             //element['phoneId'] = phoneId;
             await refCollection.add(element);
           });
-          print('##########4');
           return true;
         } catch (e) {
           return false;

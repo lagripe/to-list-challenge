@@ -15,7 +15,6 @@ class _SplashPageState extends State<SplashPage> {
   initState() {
     super.initState();
     homePageKey = GlobalKey<HomePageState>();
-    print(homePageKey);
     Timer(Duration(seconds: 1), () async {
       var unCompletedTasksCount = await DBProvider.db.countToDo(completed: 0);
       var items = await DBProvider.db.getToDo(

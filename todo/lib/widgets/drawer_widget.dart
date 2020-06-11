@@ -89,7 +89,7 @@ class DrawerWidgetState extends State<DrawerWidget> {
                               );
                               Navigator.pop(context);
                             } catch (e) {
-                              showToast("Please check your connectivity");
+                              showToast("No internet access");
                             }
                             // send sms code
                           },
