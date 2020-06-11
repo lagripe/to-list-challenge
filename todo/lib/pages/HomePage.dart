@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todo/common/common.dart';
 import 'package:todo/database/DBProvider.dart';
 import 'package:todo/pages/AddTaskPage.dart';
@@ -31,72 +32,75 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: DrawerWidget(),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: 100,
-            backgroundColor: accentColor,
-            title: Text("TODO APP"),
-            flexibleSpace: FlexibleSpaceBar(
-                background:
-                    UncompletedTasksWidget(tasks: unCompletedTasksCount)),
-          ),
-          items.length == 0
-              ? SliverFillRemaining(
-                  child: Center(
-                    child: Text("Empty"),
-                  ),
-                )
-              : SliverList(
-                  delegate: SliverChildListDelegate(List.generate(
-                      items.length,
-                      (index) => ExpansionTileWidget(
-                          item: items[index],
-                          onComplete: (value) async {
-                            print(await DBProvider.db
-                                .updateToDo(value['id'] as int));
-                            int rowsAffetcted = await DBProvider.db
-                                .updateToDo(value['id'] as int);
+    return WillPopScope(
+      onWillPop: () => SystemNavigator.pop(),
+      child: Scaffold(
+        drawer: DrawerWidget(),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              expandedHeight: 100,
+              backgroundColor: accentColor,
+              title: Text("TODO APP"),
+              flexibleSpace: FlexibleSpaceBar(
+                  background:
+                      UncompletedTasksWidget(tasks: unCompletedTasksCount)),
+            ),
+            items.length == 0
+                ? SliverFillRemaining(
+                    child: Center(
+                      child: Text("Empty"),
+                    ),
+                  )
+                : SliverList(
+                    delegate: SliverChildListDelegate(List.generate(
+                        items.length,
+                        (index) => ExpansionTileWidget(
+                            item: items[index],
+                            onComplete: (value) async {
+                              print(await DBProvider.db
+                                  .updateToDo(value['id'] as int));
+                              int rowsAffetcted = await DBProvider.db
+                                  .updateToDo(value['id'] as int);
 
-                            if (rowsAffetcted == 0) {
-                              showToast(
-                                  "Something went wrong, please try again");
-                              return;
-                            }
-                            setState(() {
-                              items.remove(value);
-                              unCompletedTasksCount--;
-                            });
-                            showToast("Task marked as completed");
-                          },
-                          onDeleted: (item) async {
-                            var rowsAffetcted = await DBProvider.db
-                                .deleteToDo(item['id'] as int);
-                            if (rowsAffetcted == 0) {
-                              showToast(
-                                  "Something went wrong, please try again");
-                              return;
-                            }
-                            setState(() {
-                              items.remove(item);
-                              unCompletedTasksCount--;
-                            });
-                            showToast("Task deleted");
-                          }))))
-        ],
+                              if (rowsAffetcted == 0) {
+                                showToast(
+                                    "Something went wrong, please try again");
+                                return;
+                              }
+                              setState(() {
+                                items.remove(value);
+                                unCompletedTasksCount--;
+                              });
+                              showToast("Task marked as completed");
+                            },
+                            onDeleted: (item) async {
+                              var rowsAffetcted = await DBProvider.db
+                                  .deleteToDo(item['id'] as int);
+                              if (rowsAffetcted == 0) {
+                                showToast(
+                                    "Something went wrong, please try again");
+                                return;
+                              }
+                              setState(() {
+                                items.remove(item);
+                                unCompletedTasksCount--;
+                              });
+                              showToast("Task deleted");
+                            }))))
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.event),
+            backgroundColor: progressBarColor,
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddTaskPage(
+                          homePageKey: widget.homePageKey,
+                        )))),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.event),
-          backgroundColor: progressBarColor,
-          onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddTaskPage(
-                        homePageKey: widget.homePageKey,
-                      )))),
     );
   }
 
