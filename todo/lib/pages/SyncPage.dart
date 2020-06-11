@@ -20,9 +20,13 @@ class _SyncPageState extends State<SyncPage> {
             color: progressBarColor,
             child: Text("Sign out"),
             onPressed: () async {
-              await FirebaseManager.auth.signOut();
-              showToast("You've signed out from the cloud");
-              Navigator.pop(context);
+              try {
+                await FirebaseManager.auth.signOut();
+                showToast("You've signed out from the cloud");
+                Navigator.pop(context);
+              } catch (e) {
+                showToast("Unable to signout, please check your connection");
+              }
             },
           )
         ],
@@ -39,7 +43,7 @@ class _SyncPageState extends State<SyncPage> {
                 if (await FirebaseManager.syncNow()) {
                   showToast("Your tasks has been synced up");
                 } else {
-                  showToast("Unable to sync, please check you connection");
+                  showToast("Unable to sync, please check your connection");
                 }
               },
             ),

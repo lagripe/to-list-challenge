@@ -82,12 +82,16 @@ class DrawerWidgetState extends State<DrawerWidget> {
                           textColor: Colors.white,
                           child: Text('Send Code'),
                           onPressed: () async {
+                            try {
+                              await FirebaseManager.sendVerificationCode(
+                                context,
+                                _phoneController.text,
+                              );
+                              Navigator.pop(context);
+                            } catch (e) {
+                              showToast("Please check your connectivity");
+                            }
                             // send sms code
-                            await FirebaseManager.sendVerificationCode(
-                              context,
-                              _phoneController.text,
-                            );
-                            Navigator.pop(context);
                           },
                         )
                       ],
