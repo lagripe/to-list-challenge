@@ -33,7 +33,7 @@ void callbackDispatcher() {
     flp.initialize(initSettings);
     var tasks = await DBProvider.db.getDueByTimeTasks();
     if (tasks > 0)
-      popNotification("You have $tasks task(s) due by the next $timeframe hours", flp);
+      popNotification("You have $tasks uncompleted task(s)", flp);
 
     return Future.value(true);
   });
