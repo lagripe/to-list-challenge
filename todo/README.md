@@ -10,3 +10,6 @@
    should be still in the app. ✅
 7. creating a notification alert for the date and time for the to-do. ✅
 8. add a sync option to save the to-dos to a firebase database. ✅
+
+# PS
+- Only algerian's phone numbers are considered
