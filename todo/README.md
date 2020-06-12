@@ -1,16 +1,12 @@
-# todo
+# Features
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Login with Phone number and SMS using Firebase services. ✅
+2. Add a to-do that has a title (required), a date and time (both required)
+   and a short description (not required) ✅
+3. Display the list of to-dos. ✅
+4. Complete or Uncomplete the to-do. ✅
+5. Delete a to-do. ✅
+6. The to-dos must be saved so when we open the app next time the to-dos, we created
+   should be still in the app. ✅
+7. creating a notification alert for the date and time for the to-do. ✅
+8. add a sync option to save the to-dos to a firebase database. ✅
