@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:path/path.dart';
+import 'package:todo/common/common.dart';
 import 'package:todo/models/todoModel.dart';
 
 class DBProvider {
@@ -65,6 +67,18 @@ class DBProvider {
     } catch (e) {
       return Future.error("Can't Sync, please try again");
     }
+  }
+
+  Future<int> getDueByTimeTasks() async {
+    var now = DateTime.now();
+    var nowConverted = DateFormat('yyyy-MM-dd HH:mm').format(now);
+    var max = now.add(Duration(hours: timeframe));
+    var maxConverted = DateFormat('yyyy-MM-dd HH:mm').format(max);
+    var db = await database;
+    return Sqflite.firstIntValue(
+      await db.rawQuery('SELECT count(*) from todo where date between ? and ?',
+          [nowConverted, maxConverted]),
+    );
   }
 
   Future<int> updateToDo(int id) async {
