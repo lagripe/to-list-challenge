@@ -22,7 +22,7 @@ class _SyncPageState extends State<SyncPage> {
             onPressed: () async {
               try {
                 await FirebaseManager.auth.signOut();
-                showToast("You've signed out from the cloud");
+                showToast("You've signed out of the cloud");
                 Navigator.pop(context);
               } catch (e) {
                 showToast("Unable to signout, please check your connection");
